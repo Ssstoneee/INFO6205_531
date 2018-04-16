@@ -60,19 +60,26 @@ public class TspTest {
 
     @Test
     public void calFitness() {
+        for (int i = 0; i < population; i++) {
+            for (int j = 0; j < cityNum - 1; j++)
+                t.cities[i].fitness += t.distance[cities[i].city[j]][cities[i].city[j + 1]];
+            t.cities[i].fitness += t.distance[cities[i].city[0]][cities[i].city[cityNum - 1]];
+        }
+
+//        assert (t.cities[population-1].fitness == t.distance[cities[]])
     }
 
     @Test
     public void calIsSelected() {
         long sum = 0;
-        Tsp t = new Tsp();
+//        Tsp t = new Tsp();
 
         for(int i = 0; i < population; i++)
             sum += t.cities[i].fitness;
         for(int i = 0; i < population; i++) {
             t.cities[i].selectP = (double)t.cities[i].fitness/sum;
         }
-        assert (t.cities[1].selectP != (double)t.cities[1].fitness/sum);
+        assert (t.cities[1].selectP == (double)t.cities[1].fitness/sum);
 
     }
 
