@@ -93,7 +93,7 @@ public class GA {
         }
     }
 
-    private double[] gp(int individual, int dimension){
+    public double[] gp(int individual, int dimension){
         double[] temp = new double[dimension];
         double[] temp1 = new double[dimension];
         int p = 2 * dimension + 3;

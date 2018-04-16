@@ -15,7 +15,7 @@ public class Tsp {
         int city[] = new int[cityNum];      //单个基因的城市序列 The genes
         long fitness;                      //该基因的适应度 The fitness
         double selectP;                        //选择概率 The rate of select
-        double exceptp;                        //期望概率 The excepted rate
+        double espectp;                        //期望概率 The excepted rate
         int isSelected;                        //是否被选择 Whether selected
     }
     public genotype[] cities = new genotype[population];
@@ -38,7 +38,7 @@ public class Tsp {
             }
             cities[i].fitness = 0;
             cities[i].selectP = 0;
-            cities[i].exceptp = 0;
+            cities[i].espectp = 0;
             cities[i].isSelected = 0;
         }
         initDistance();
@@ -51,7 +51,7 @@ public class Tsp {
         for(int i = 0; i < population; i++){
             cities[i].fitness = 0;
             cities[i].selectP = 0;
-            cities[i].exceptp = 0;
+            cities[i].espectp = 0;
             cities[i].isSelected = 0;
         }
         CalFitness();
@@ -114,7 +114,7 @@ public class Tsp {
      * 计算选择概率
      * Calculate the select rate
      */
-    private void CalSelectP(){
+    public void CalSelectP(){
         long sum = 0;
         for(int i = 0; i < population; i++)
             sum += cities[i].fitness;
@@ -125,9 +125,9 @@ public class Tsp {
      * 计算期望概率
      * Calculate the except rate
      */
-    private void CalExceptP(){
+    public void CalExceptP(){
         for(int i = 0; i < population; i++)
-            cities[i].exceptp = (double)cities[i].selectP * population;
+            cities[i].espectp = (double)cities[i].selectP * population;
     }
     /**
      * 计算该城市序列是否较优，较优则被选择，进入下一代
@@ -136,13 +136,13 @@ public class Tsp {
     public void CalIsSelected(){
         int needSelecte = population;
         for(int i = 0; i< population; i++)
-            if( cities[i].exceptp < 1){
+            if( cities[i].espectp < 1){
                 cities[i].isSelected++;
                 needSelecte --;
             }
         double[] temp = new double[population];
         for (int i = 0; i < population; i++) {
-            temp[i] = cities[i].exceptp * 10;
+            temp[i] = cities[i].espectp * 10;
         }
         int j = 0;
         while ( needSelecte != 0) {
