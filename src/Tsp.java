@@ -56,7 +56,7 @@ public class Tsp {
         }
         CalFitness();
         CalSelectP();
-        CalExceptP();
+        CalExpectP();
         CalIsSelected();
     }
     /**
@@ -125,7 +125,7 @@ public class Tsp {
      * 计算期望概率
      * Calculate the except rate
      */
-    public void CalExceptP(){
+    public void CalExpectP(){
         for(int i = 0; i < population; i++)
             cities[i].espectp = (double)cities[i].selectP * population;
     }

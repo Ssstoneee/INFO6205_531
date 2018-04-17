@@ -14,7 +14,7 @@ public class TspTest {
     public int range = 200;
 
      Tsp t=new Tsp();
-//qwe
+
 
     Tsp.genotype[] cities = new Tsp.genotype[population];
 
@@ -60,38 +60,73 @@ public class TspTest {
 
     @Test
     public void calFitness() {
+        Tsp T = new Tsp();
+        T.initDistance();
+        T.CalAll();
+        long x[] = new long[population];
+//        int y[];
         for (int i = 0; i < population; i++) {
             for (int j = 0; j < cityNum - 1; j++)
-                t.cities[i].fitness += t.distance[cities[i].city[j]][cities[i].city[j + 1]];
-            t.cities[i].fitness += t.distance[cities[i].city[0]][cities[i].city[cityNum - 1]];
-        }
+                T.cities[i].fitness += T.distance[T.cities[i].city[j]][T.cities[i].city[j + 1]];
+            x[i] = T.cities[i].fitness + T.distance[T.cities[i].city[0]][T.cities[i].city[cityNum - 1]];
+            T.cities[i].fitness += T.distance[T.cities[i].city[0]][T.cities[i].city[cityNum - 1]];
 
-//        assert (t.cities[population-1].fitness == t.distance[cities[]])
+            assertEquals (T.cities[i].fitness ,x[i]);
+        }
+//        for (int i = 0; i < 10; i++)
+//
+//            assertEquals (T.cities[i].fitness , x[i]);
+
+
+
+//              T.cities[i].fitness += T.distance[cities[i].city[j]][cities[i].city[j + 1]];
+//            }
+//            T.cities[i].fitness += T.distance[cities[i].city[0]][cities[i].city[cityNum - 1]];
+//        }
+//        for (int i = 0; i < population; i++) {
+//            System.out.println("111");
+//            assert (T.cities[i].fitness == T.cities[i].fitness + T.distance[cities[i].city[0]][cities[i].city[cityNum - 1]]);
+//        }
     }
 
     @Test
     public void calIsSelected() {
         long sum = 0;
-//        Tsp t = new Tsp();
-
+        Tsp T = new Tsp();
+        T.initDistance();
+        T.CalFitness();
         for(int i = 0; i < population; i++)
-            sum += t.cities[i].fitness;
+            sum += T.cities[i].fitness;
         for(int i = 0; i < population; i++) {
-            t.cities[i].selectP = (double)t.cities[i].fitness/sum;
+            T.cities[i].selectP = (double)T.cities[i].fitness/sum;
         }
-        assert (t.cities[1].selectP == (double)t.cities[1].fitness/sum);
+
+        assert (T.cities[1].selectP == (double)T.cities[1].fitness/sum);
 
     }
 
     @Test
     public void calExceptP() {
-
-
+        Tsp T = new Tsp();
+        T.initDistance();
+        T.CalFitness();
+        T.CalIsSelected();
+        T.CalSelectP();
+        for(int i = 0; i < population; i++)
+            T.cities[i].espectp = (double)T.cities[i].selectP * population;
+        for (int j = 0; j < population; j++)
+        assert (T.cities[j].espectp == (double)T.cities[j].selectP * population);
     }
 
     @Test
     public void calSelectP() {
-
+        Tsp T = new Tsp();
+        T.initDistance();
+        T.CalFitness();
+        for(int i = 0; i < population; i++)
+            T.cities[i].espectp = (double)T.cities[i].selectP * population;
+        for(int j = 0; j < population; j++)
+            assert (T.cities[j].espectp == (double)T.cities[j].selectP * population);
     }
 }
 
